@@ -1,11 +1,10 @@
-from rest_framework import serializers
+from django.urls import path
+from accounts.api.views import(
+    registration_view,
+)
 
-from account.models import Account
+app_name = "accounts"
 
-class RegistrationSerializer(serializers.ModelSerializer):
-
-    password2 = serializers.CharField(style={'input_type': 'passworkd'}, write_only=True)
-
-    class Meta:
-        model = Account
-        fields = ['email', 'username', 'password', 'password2']
+urlpatterns = [
+    path('register', registration_view, name="register"),
+]
