@@ -19,7 +19,7 @@ class UserTodoViewset(viewsets.ModelViewSet):
             return UserTodo.objects.filter(user=user)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def todo_by_id(request, pk):
@@ -36,14 +36,6 @@ def todo_by_id(request, pk):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-# class TodoByIdViewset(viewsets.ModelViewSet):
-#     serializer_class = UserTodoSerializer
-#     queryset = UserTodo.objects.none()
-
-#     def get_queryset(self):
-#         user = self.request.user
-#         todo_id = self.kwargs['todo_id']
-#         if user.is_anonymous:
-#             return UserTodo.objects.none()
-#         else:
-#             return UserTodo.objects.filter(id=todo_id)
+    elif request.method == "DELETE":
+        todo.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
