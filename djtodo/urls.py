@@ -19,16 +19,17 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.authtoken import views
 from accounts.api import views as auth_views
-from todo.api.views import UserTodoViewset, TodoByIdViewset
+from todo.api.views import UserTodoViewset, todo_by_id
 
 router = routers.DefaultRouter()
 router.register('todos', UserTodoViewset)
-router.register('^todos/(?P<todo_id>.+)/$', TodoByIdViewset)
+# router.register('^todos/(?P<todo_id>.+)/$', todo_by_id.as_view())
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/register', auth_views.registration_view, name='register'),
     path('api/accounts/login', views.obtain_auth_token, name='login'),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('api/todos/<todo_id>/', todo_by_id, name='todo')
 ]
