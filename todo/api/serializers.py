@@ -6,7 +6,7 @@ class UserTodoSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = UserTodo
-        fields = ('name', 'description', 'priority')
+        fields = ('id', 'name', 'description', 'priority')
 
     def create(self, validated_data):
         user = self.context['request'].user
