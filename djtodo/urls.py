@@ -19,10 +19,11 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.authtoken import views
 from accounts.api import views as auth_views
-from todo.api.views import UserTodoViewset
+from todo.api.views import UserTodoViewset, TodoByIdViewset
 
 router = routers.DefaultRouter()
 router.register('todos', UserTodoViewset)
+router.register('^todos/(?P<todo_id>.+)/$', TodoByIdViewset)
 
 
 urlpatterns = [
